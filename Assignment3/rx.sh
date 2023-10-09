@@ -3,14 +3,14 @@
 # ******************************************************************************************************************************************
 # Program name: "Assignment 3 - Sort by Pointers".  This program demonstrates the use of cntl+d to terminate an input sequence.            *
 # Copyright (C) 2023  Ashley Chan                                                                                                          *
-#                                                                                                                                         *
+#                                                                                                                                          *
 # This file is part of the software program "Assignment 3 - Sort by Pointers".                                                             *
 # "Assignment 3 - Sort by Pointers" is free software: you can redistribute it and/or modify it under the terms of the GNU General Public   *
 # License version 3 as published by the Free Software Foundation.                                                                          *
 # This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied                       *
 # warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.                   *
 # A copy of the GNU General Public License v3 has been distributed with this software. If not found it is available here:                  * 
-# <https://www.gnu.org/licenses/>.   The copyright holder may be contacted here: ashleyc417@fullerton.edu                                  *
+# <https://www.gnu.org/licenses/>.   The copyright holder may be contacted here: ashleyc417@csu.fullerton.edu                              *
 # ******************************************************************************************************************************************
 
 
@@ -19,7 +19,7 @@
 # ========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3**
 # Author information
 #  Author name: Ashley Chan
-#  Author email: ashleyc417@fullerton.edu
+#  Author email: ashleyc417@csu.fullerton.edu
 
 # Program information
 #  Program name: Assignment 3 - Sort by Pointers
