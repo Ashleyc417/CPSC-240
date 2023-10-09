@@ -1,0 +1,95 @@
+     1                                  ;Author: Ashley Chan
+     2                                  ;Date: 09/25/2023
+     3                                  ;Program Name: Assignment 02 - Array Management System
+     4                                  
+     5                                  ;===============================================================================
+     6                                  ; Declarations
+     7                                  ;===============================================================================  
+     8                                  extern scanf
+     9                                  global input_array
+    10                                  
+    11                                  ;===============================================================================
+    12                                  ; Static Variables
+    13                                  ;=============================================================================== 
+    14                                  segment .data
+    15 00000000 256C6600                floatform db "%lf", 0
+    16                                  
+    17                                  segment .text
+    18                                  input_array:
+    19                                  ;===============================================================================
+    20                                  ; Set up Stack
+    21                                  ;===============================================================================  
+    22 00000000 55                          push rbp                                          ;Backup rbp
+    23 00000001 4889E5                      mov  rbp,rsp                                      ;The base pointer now points to top of stack
+    24 00000004 57                          push rdi                                          ;Backup rdi
+    25 00000005 56                          push rsi                                          ;Backup rsi
+    26 00000006 52                          push rdx                                          ;Backup rdx
+    27 00000007 51                          push rcx                                          ;Backup rcx
+    28 00000008 4150                        push r8                                           ;Backup r8
+    29 0000000A 4151                        push r9                                           ;Backup r9
+    30 0000000C 4152                        push r10                                          ;Backup r10
+    31 0000000E 4153                        push r11                                          ;Backup r11
+    32 00000010 4154                        push r12                                          ;Backup r12
+    33 00000012 4155                        push r13                                          ;Backup r13
+    34 00000014 4156                        push r14                                          ;Backup r14
+    35 00000016 4157                        push r15                                          ;Backup r15
+    36 00000018 53                          push rbx                                          ;Backup rbx
+    37 00000019 9C                          pushf
+    38 0000001A 6A00                        push qword 0
+    39                                  
+    40                                  ;===============================================================================
+    41                                  ; Store Values
+    42                                  ;===============================================================================  
+    43 0000001C 4989FE                      mov r14, rdi                                       ;Array Pointer
+    44 0000001F 4989F7                      mov r15, rsi                                       ;Size of Array
+    45 00000022 4D31ED                      xor r13, r13                                       ;Counter for Loop
+    46                                  
+    47                                  loop:
+    48                                      ; Check the loop count, exit if necessary
+    49 00000025 4D39FD                      cmp r13, r15                                       ;Check the loop counter
+    50 00000028 742C                        je done                                            ;Jump to done if max size is reached
+    51                                  
+    52 0000002A B800000000                  mov rax, 0
+    53 0000002F 48BF-                       mov rdi, floatform                                 ;Specify scanf format
+    53 00000031 [0000000000000000] 
+    54 00000039 6A00                        push qword 0
+    55 0000003B 4889E6                      mov rsi, rsp
+    56 0000003E E8(00000000)                call scanf                                         ;Take in user's input value
+    57                                  
+    58 00000043 4898                        cdqe
+    59                                  
+    60 00000045 4883F8FF                    cmp rax, -1                                        ;Check for Ctrl+D being entered
+    61 00000049 415C                        pop r12                                            ;Pop the value into r12 
+    62 0000004B 7409                        je done
+    63                                  
+    64 0000004D 4F8924EE                    mov [r14 + r13 * 8], r12                           ;Insert value into array
+    65 00000051 49FFC5                      inc r13                                            ;Increment Counter
+    66 00000054 EBCF                        jmp loop                                           ;Repeat Loop
+    67                                  
+    68                                  done:
+    69 00000056 58                          pop rax
+    70 00000057 4C89E8                      mov rax, r13                                       ;Array size will be returned in r13
+    71                                  
+    72                                  ;===============================================================================
+    73                                  ; Clean up Stack
+    74                                  ;===============================================================================
+    75 0000005A 9D                          popf                                               ;Restore rflags
+    76 0000005B 5B                          pop rbx                                            ;Restore rbx
+    77 0000005C 415F                        pop r15                                            ;Restore r15
+    78 0000005E 415E                        pop r14                                            ;Restore r14
+    79 00000060 415D                        pop r13                                            ;Restore r13
+    80 00000062 415C                        pop r12                                            ;Restore r12
+    81 00000064 415B                        pop r11                                            ;Restore r11
+    82 00000066 415A                        pop r10                                            ;Restore r10
+    83 00000068 4159                        pop r9                                             ;Restore r9
+    84 0000006A 4158                        pop r8                                             ;Restore r8
+    85 0000006C 59                          pop rcx                                            ;Restore rcx
+    86 0000006D 5A                          pop rdx                                            ;Restore rdx
+    87 0000006E 5E                          pop rsi                                            ;Restore rsi
+    88 0000006F 5F                          pop rdi                                            ;Restore rdi
+    89 00000070 5D                          pop rbp                                            ;Restore rbp
+    90                                  
+    91 00000071 C3                          ret
+    92                                  
+    93                                  
+    94                                  

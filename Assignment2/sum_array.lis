@@ -1,0 +1,84 @@
+     1                                  ;Author: Ashley Chan
+     2                                  ;Date: 09/25/2023
+     3                                  ;Program Name: Assignment 02 - Array Management System
+     4                                  
+     5                                  ;===============================================================================
+     6                                  ; Declarations
+     7                                  ;===============================================================================  
+     8                                  global sum_array
+     9                                  
+    10                                  segment .bss
+    11                                  segment .data
+    12                                  
+    13                                  segment .text
+    14                                  sum_array:
+    15                                  ;===============================================================================
+    16                                  ; Set up Stack
+    17                                  ;===============================================================================  
+    18 00000000 55                          push rbp                                           ;Backup rbp
+    19 00000001 4889E5                      mov  rbp,rsp                                       ;The base pointer now points to top of stack
+    20 00000004 57                          push rdi                                           ;Backup rdi
+    21 00000005 56                          push rsi                                           ;Backup rsi
+    22 00000006 52                          push rdx                                           ;Backup rdx
+    23 00000007 51                          push rcx                                           ;Backup rcx
+    24 00000008 4150                        push r8                                            ;Backup r8
+    25 0000000A 4151                        push r9                                            ;Backup r9
+    26 0000000C 4152                        push r10                                           ;Backup r10
+    27 0000000E 4153                        push r11                                           ;Backup r11
+    28 00000010 4154                        push r12                                           ;Backup r12
+    29 00000012 4155                        push r13                                           ;Backup r13
+    30 00000014 4156                        push r14                                           ;Backup r14
+    31 00000016 4157                        push r15                                           ;Backup r15
+    32 00000018 53                          push rbx                                           ;Backup rbx
+    33 00000019 9C                          pushf
+    34 0000001A 6A00                        push qword 0
+    35                                  
+    36                                      ;===============================================================================
+    37                                      ; Store Values
+    38                                      ;===============================================================================  
+    39 0000001C 4989FE                      mov r14, rdi                                       ;Array Pointer
+    40 0000001F 4989F7                      mov r15, rsi                                       ;Size of Array
+    41 00000022 4D31ED                      xor r13, r13                                       ;Counter for Loop
+    42                                  
+    43 00000025 B801000000                  mov rax, 1 
+    44 0000002A BA00000000                  mov rdx, 0
+    45                                  
+    46 0000002F F24C0F2AFA                  cvtsi2sd xmm15, rdx                                ;Store ongoing sum in xmm15
+    47                                  
+    48                                  loop:
+    49 00000034 4D39FD                      cmp r13, r15                                       ;Check the loop counter
+    50 00000037 740B                        je done                                            ;Jump to done if max size is reached
+    51                                  
+    52 00000039 F2470F583CEE                addsd xmm15, [r14 + 8*r13]                         ;Add the current element to xmm15 
+    53                                  
+    54                                  
+    55 0000003F 49FFC5                      inc r13                                            ;Add to Counter
+    56 00000042 EBF0                        jmp loop                                           ;Repeat Loop
+    57                                  
+    58                                  done:
+    59 00000044 58                          pop rax
+    60 00000045 F2410F10C7                  movsd xmm0, xmm15                                  ;Return with the array's sum in xmm0
+    61                                  
+    62                                  ;===============================================================================
+    63                                  ; Clean up Stack
+    64                                  ;===============================================================================  
+    65 0000004A 9D                          popf                                               ;Restore rflags
+    66 0000004B 5B                          pop rbx                                            ;Restore rbx
+    67 0000004C 415F                        pop r15                                            ;Restore r15
+    68 0000004E 415E                        pop r14                                            ;Restore r14
+    69 00000050 415D                        pop r13                                            ;Restore r13
+    70 00000052 415C                        pop r12                                            ;Restore r12
+    71 00000054 415B                        pop r11                                            ;Restore r11
+    72 00000056 415A                        pop r10                                            ;Restore r10
+    73 00000058 4159                        pop r9                                             ;Restore r9
+    74 0000005A 4158                        pop r8                                             ;Restore r8
+    75 0000005C 59                          pop rcx                                            ;Restore rcx
+    76 0000005D 5A                          pop rdx                                            ;Restore rdx
+    77 0000005E 5E                          pop rsi                                            ;Restore rsi
+    78 0000005F 5F                          pop rdi                                            ;Restore rdi
+    79 00000060 5D                          pop rbp                                            ;Restore rbp
+    80                                  
+    81 00000061 C3                          ret
+    82                                  
+    83                                  
+    84                                  

@@ -1,0 +1,179 @@
+     1                                  ;Author: Ashley Chan
+     2                                  ;Date: 09/25/2023
+     3                                  ;Program Name: Assignment 02 - Array Management System
+     4                                  
+     5                                  ;===============================================================================
+     6                                  ; Declarations
+     7                                  ;=============================================================================== 
+     8                                  extern printf
+     9                                  extern exit
+    10                                  
+    11                                  extern input_array
+    12                                  extern output_array
+    13                                  extern sum_array
+    14                                  
+    15                                  size equ 8
+    16                                  global manage
+    17                                  
+    18                                  ;===============================================================================
+    19                                  ; Static Variables
+    20                                  ;=============================================================================== 
+    21                                  segment .data
+    22 00000000 57652077696C6C2074-         prompt1 db "We will take care of all your array needs.", 10, 0
+    22 00000009 616B65206361726520-
+    22 00000012 6F6620616C6C20796F-
+    22 0000001B 757220617272617920-
+    22 00000024 6E656564732E0A00   
+    23 0000002C 506C6561736520696E-         prompt2 db "Please input float numbers separated by ws.", 10, 0
+    23 00000035 70757420666C6F6174-
+    23 0000003E 206E756D6265727320-
+    23 00000047 736570617261746564-
+    23 00000050 2062792077732E0A00 
+    24                                  
+    25 00000059 5468616E6B20796F75-         output1 db "Thank you. The numbers in the array are:", 10, 0
+    25 00000062 2E20546865206E756D-
+    25 0000006B 6265727320696E2074-
+    25 00000074 686520617272617920-
+    25 0000007D 6172653A0A00       
+    26 00000083 5468652073756D206F-         output2 db "The sum of numbers in the array is %8.10lf", 10, 0
+    26 0000008C 66206E756D62657273-
+    26 00000095 20696E207468652061-
+    26 0000009E 727261792069732025-
+    26 000000A7 382E31306C660A00   
+    27 000000AF 5468616E6B20796F75-         output3 db "Thank you for using Array Management System.", 10, 0
+    27 000000B8 20666F72207573696E-
+    27 000000C1 67204172726179204D-
+    27 000000CA 616E6167656D656E74-
+    27 000000D3 2053797374656D2E0A-
+    27 000000DC 00                 
+    28                                  
+    29                                  ;===============================================================================
+    30                                  ; Mutable Variables
+    31                                  ;=============================================================================== 
+    32                                  segment .bss
+    33                                      align 16
+    34 00000000 <res 40h>                   array resq size
+    35                                  
+    36                                  segment .text
+    37                                  
+    38                                  manage:
+    39                                  ;===============================================================================
+    40                                  ; Set up Stack
+    41                                  ;===============================================================================     
+    42 00000000 55                          push rbp                                          ;Backup rbp
+    43 00000001 4889E5                      mov  rbp,rsp                                      ;The base pointer now points to top of stack
+    44 00000004 57                          push rdi                                          ;Backup rdi
+    45 00000005 56                          push rsi                                          ;Backup rsi
+    46 00000006 52                          push rdx                                          ;Backup rdx
+    47 00000007 51                          push rcx                                          ;Backup rcx
+    48 00000008 4150                        push r8                                           ;Backup r8
+    49 0000000A 4151                        push r9                                           ;Backup r9
+    50 0000000C 4152                        push r10                                          ;Backup r10
+    51 0000000E 4153                        push r11                                          ;Backup r11
+    52 00000010 4154                        push r12                                          ;Backup r12
+    53 00000012 4155                        push r13                                          ;Backup r13
+    54 00000014 4156                        push r14                                          ;Backup r14
+    55 00000016 4157                        push r15                                          ;Backup r15
+    56 00000018 53                          push rbx                                          ;Backup rbx	
+    57 00000019 9C                          pushf
+    58 0000001A 6A00                        push qword 0
+    59                                  
+    60                                  ;===============================================================================
+    61                                  ; Print Prompts
+    62                                  ;===============================================================================
+    63 0000001C 6A00                        push qword 0
+    64 0000001E B800000000                  mov rax, 0
+    65 00000023 48BF-                       mov rdi, prompt1
+    65 00000025 [0000000000000000] 
+    66 0000002D E8(00000000)                call printf
+    67 00000032 58                          pop rax
+    68                                  
+    69                                      ; Prompt the user for floats
+    70 00000033 6A00                        push qword 0
+    71 00000035 B800000000                  mov rax, 0
+    72 0000003A 48BF-                       mov rdi, prompt2
+    72 0000003C [2C00000000000000] 
+    73 00000044 E8(00000000)                call printf
+    74 00000049 58                          pop rax
+    75                                  
+    76                                  ;===============================================================================
+    77                                  ; Call input_array
+    78                                  ;===============================================================================
+    79 0000004A 6A00                        push qword 0
+    80 0000004C B800000000                  mov rax, 0
+    81 00000051 48BF-                       mov rdi, array
+    81 00000053 [0000000000000000] 
+    82 0000005B BE08000000                  mov rsi, size
+    83 00000060 E8(00000000)                call input_array
+    84 00000065 4989C5                      mov r13, rax
+    85 00000068 58                          pop rax
+    86                                  
+    87                                  ;===============================================================================
+    88                                  ; Call output_array
+    89                                  ;===============================================================================
+    90 00000069 6A00                        push qword 0
+    91 0000006B B800000000                  mov rax, 0
+    92 00000070 48BF-                       mov rdi, output1
+    92 00000072 [5900000000000000] 
+    93 0000007A E8(00000000)                call printf
+    94 0000007F 58                          pop rax
+    95                                  
+    96                                      ; Call on output_array helper function to print the entire array
+    97 00000080 6A00                        push qword 0
+    98 00000082 B800000000                  mov rax, 0
+    99 00000087 48BF-                       mov rdi, array  
+    99 00000089 [0000000000000000] 
+   100 00000091 4C89EE                      mov rsi, r13 ; Again it is important to note r13 is the actual size of our array
+   101 00000094 E8(00000000)                call output_array
+   102 00000099 58                          pop rax
+   103                                  
+   104                                  ;===============================================================================
+   105                                  ; Call sum_array
+   106                                  ;===============================================================================
+   107 0000009A 6A00                        push qword 0
+   108 0000009C B800000000                  mov rax, 0
+   109 000000A1 48BF-                       mov rdi, array 
+   109 000000A3 [0000000000000000] 
+   110 000000AB 4C89EE                      mov rsi, r13
+   111 000000AE E8(00000000)                call sum_array
+   112 000000B3 F2440F10F8                  movsd xmm15, xmm0
+   113 000000B8 58                          pop rax
+   114                                  
+   115 000000B9 6A00                        push qword 0
+   116 000000BB B801000000                  mov rax, 1
+   117 000000C0 F2410F10C7                  movsd xmm0, xmm15
+   118 000000C5 48BF-                       mov rdi, output2
+   118 000000C7 [8300000000000000] 
+   119 000000CF E8(00000000)                call printf
+   120 000000D4 58                          pop rax
+   121                                  
+   122 000000D5 6A00                        push qword 0
+   123 000000D7 B800000000                  mov rax, 0
+   124 000000DC 48BF-                       mov rdi, output3
+   124 000000DE [AF00000000000000] 
+   125 000000E6 E8(00000000)                call printf
+   126 000000EB 58                          pop rax
+   127                                  
+   128 000000EC F2410F10C7                  movsd xmm0, xmm15
+   129 000000F1 58                          pop rax
+   130                                  
+   131                                  ;===============================================================================
+   132                                  ; Clean up Stack
+   133                                  ;===============================================================================
+   134 000000F2 9D                          popf                                    ;Restore rflags
+   135 000000F3 5B                          pop rbx                                 ;Restore rbx
+   136 000000F4 415F                        pop r15                                 ;Restore r15
+   137 000000F6 415E                        pop r14                                 ;Restore r14
+   138 000000F8 415D                        pop r13                                 ;Restore r13
+   139 000000FA 415C                        pop r12                                 ;Restore r12
+   140 000000FC 415B                        pop r11                                 ;Restore r11
+   141 000000FE 415A                        pop r10                                 ;Restore r10
+   142 00000100 4159                        pop r9                                  ;Restore r9
+   143 00000102 4158                        pop r8                                  ;Restore r8
+   144 00000104 59                          pop rcx                                 ;Restore rcx
+   145 00000105 5A                          pop rdx                                 ;Restore rdx
+   146 00000106 5E                          pop rsi                                 ;Restore rsi
+   147 00000107 5F                          pop rdi                                 ;Restore rdi
+   148 00000108 5D                          pop rbp                                 ;Restore rbp
+   149                                  
+   150 00000109 C3                          ret
