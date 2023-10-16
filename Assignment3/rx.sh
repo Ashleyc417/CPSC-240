@@ -25,7 +25,7 @@
 #  Program name: Assignment 3 - Sort by Pointers
 #  Programming languages: Two module in C, One module in C++, Two module in X86-64, and One module in Bash.
 #  Date program began: 2023-Oct-4
-#  Date of last update: 2023-Oct-9
+#  Date of last update: 2023-Oct-15
 #  Files in this program: main.c, output_array.c, sorted_array.cpp, director.asm, input_array.asm, rx.sh
 #  Status: This program was tested over a dozen times on Ubuntu 22.04.3 (Oct 2023) without errors.
 #  Purpose: The intent of this program is to sort an inputted array and return the result.
@@ -34,7 +34,6 @@
 #  Name: rx.sh
 #  Language: Bash
 #  Purpose: Assemble/Compile modules and link objects, then runs program.
-
 
 
 
@@ -54,14 +53,14 @@ nasm -f elf64 -l input_array.lis -o input_array.o input_array.asm
 echo "Compile the C module output_array.c"
 gcc -c -m64 -Wall -o output_array.o output_array.c -fno-pie -no-pie
 
-echo "Compile the C module sorted_array.cpp"
-g++ -c -m64 -Wall -o sorted_array.o sorted_array.cpp -fno-pie -no-pie -std=c++17
+echo "Compile the C module sort_pointers.asm"
+nasm -f elf64 -l sort_pointers.lis -o sort_pointers.o sort_pointers.asm
 
 echo "Compile the C module main.c"
 gcc -c -m64 -Wall -o main.o main.c -fno-pie -no-pie
 
 echo "Link all the object files already created"
-gcc -m64 -o arr.out director.o input_array.o output_array.o sorted_array.o main.o -fno-pie -no-pie
+gcc -m64 -o arr.out director.o input_array.o output_array.o sort_pointers.o main.o -fno-pie -no-pie -z noexecstack
 
 rm -f *.o
 rm -f *.lis
