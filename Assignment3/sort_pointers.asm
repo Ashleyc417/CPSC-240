@@ -73,14 +73,14 @@ sort_pointers:
     mov rdx, 0
     xsave [backup_r]
     
-    mov r8, rdi        
-    mov r9, rsi       
-    xor r10, r10   
+    mov r8, rdi     ; Pointer for array
+    mov r9, rsi     ; Size of array
+    xor r10, r10    ; Counter for loop
     inc r10             
 
     xor r11, r11       
-    xor r12, r12        
-    xor r13, r13      
+    xor r12, r12    ; Temp variable
+    xor r13, r13    ; Temp variable
 
     jmp sweep
 
@@ -92,25 +92,31 @@ restart:
     jmp sweep
 
 sweep:
+    ; If true, array is completely sorted, and jump to done
     cmp r11, r9
     je done
    
+    ; If true, sweep again
     cmp r10, r9
     jge restart
 
+    ; If current element is larger, swap elements
     mov r12, [r8 + r10 * 8 - 8]
     mov r13, [r8 + r10 * 8]
     
     movsd xmm8, [r12]
     movsd xmm9, [r13]
 
+    ; Compare both, swap if needed
     ucomisd xmm8, xmm9
     ja swap
 
+    ; Increment counter if there was no swap
     inc r11
     jmp after_swap
 
 swap:
+    ; Swap both pointers using temp registers
     mov r12, [r8 + r10 * 8 - 8]
     mov r13, [r8 + r10 * 8]
     mov [r8 + r10 * 8 - 8], r13
@@ -119,6 +125,7 @@ swap:
     jmp after_swap
 
 after_swap:
+    ; Increment counter and continue loop
     inc r10
     jmp sweep
 
