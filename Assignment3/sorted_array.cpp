@@ -23,7 +23,7 @@
 //  Program name: Assignment 3 - Sort by Pointers
 //  Programming languages: Two module in C, One module in C++, Two module in X86-64, and One module in Bash.
 //  Date program began: 2023-Oct-4
-//  Date of last update: 2023-Oct-9
+//  Date of last update: 2023-Oct-15
 //  Files in this program: main.c, output_array.c, sorted_array.cpp, director.asm, input_array.asm, rx.sh
 //  Status: This program was tested over a dozen times on Ubuntu 22.04.3 (Oct 2023) without errors.
 //  Purpose: The intent of this program is to sort an inputted array and return the result.
@@ -38,24 +38,24 @@
 
 // ========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3**
 
-extern "C" void sort_pointers(double*[], unsigned long);
+// extern "C" void sort_pointers(double*[], unsigned long);
 
-void sort_pointers(double *arr[], unsigned long size) {
-    bool swapped;
-    for (unsigned long i = 0; i < size; ++i) {
-        swapped = false;
-        for (unsigned long j = 0; j < size - i - 1; ++j) {
-            if(*(arr[j]) > *(arr[j + 1])) {
-                // Swap arr[j] and arr[j + 1]
-                double *temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                swapped = true;
-            }
-        }
-        // If no two elements are swapped by inner loop, break
-        if (!swapped) {
-            break;
-        }
-    } 
-}
+// void sort_pointers(double *arr[], unsigned long size) {
+//     bool swapped;
+//     for (unsigned long i = 0; i < size; ++i) {
+//         swapped = false;
+//         for (unsigned long j = 0; j < size - i - 1; ++j) {
+//             if(*(arr[j]) > *(arr[j + 1])) {
+//                 // Swap arr[j] and arr[j + 1]
+//                 double *temp = arr[j];
+//                 arr[j] = arr[j + 1];
+//                 arr[j + 1] = temp;
+//                 swapped = true;
+//             }
+//         }
+//         // If no two elements are swapped by inner loop, break
+//         if (!swapped) {
+//             break;
+//         }
+//     } 
+// }

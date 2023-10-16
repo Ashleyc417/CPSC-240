@@ -23,13 +23,13 @@
 ;  Program name: Assignment 3 - Sort by Pointers
 ;  Programming languages: Two module in C, One module in C++, Two module in X86-64, and One module in Bash.
 ;  Date program began: 2023-Oct-4
-;  Date of last update: 2023-Oct-9
+;  Date of last update: 2023-Oct-15
 ;  Files in this program: main.c, output_array.c, sorted_array.cpp, director.asm, input_array.asm, rx.sh
 ;  Status: This program was tested over a dozen times on Ubuntu 22.04.3 (Oct 2023) without errors.
 ;  Purpose: The intent of this program is to sort an inputted array and return the result.
 
 ; This file
-;  Name: director,asm
+;  Name: director.asm
 ;  Language: X86-64
 ;  Syntax: Intel
 ;  Purpose: Manage input, sorting, and printing the array.
@@ -47,8 +47,7 @@ array_size equ 10
 extern printf         ; external C function to write to standard output
 extern input_array    ; external function from the assembly module inputarray.asm
 extern output_array   ; external function from the assembly module outputarray.c
-extern sort_pointers  ; external function from the assembly module sortpointers.cpp  
-global director
+extern sort_pointers  ; external function from the assembly module sort_pointers.asm 
 
 ;==================================================================================================================================
 ; Static Variables
@@ -77,6 +76,7 @@ segment .bss
 ; Functionality LoGic
 ;==================================================================================================================================
 section .text
+global director
 
 director:
 
@@ -105,17 +105,15 @@ director:
 
 
     ; Print initial messages
-    mov qword   rax, 0
-    mov         rdi, string_format
-    mov         rsi, initial_prompt
+    mov         rax, 0
+    mov         rdi, initial_prompt
     call        printf
 
     mov         rax, 0
-    mov         rdi, string_format
-    mov         rsi, input_nums_prompt
+    mov         rdi, input_nums_prompt
     call        printf
 
-    ; Prepare to take in numbers to the array by using the external assembly function from module input_array.asm
+    ; Take in numbers using input_array.asm
     mov         rax, 0
     mov         rdi, array
     mov         rsi, array_size
@@ -124,8 +122,7 @@ director:
 
     ; Show the nums the user entered
     mov         rax, 0
-    mov         rdi, string_format
-    mov         rsi, start_print_nums_output
+    mov         rdi, start_print_nums_output
     call        printf
 
     ; Print the elements in the array using output_array
@@ -136,14 +133,12 @@ director:
 
     ; Print mesage "End of ouput of array."
     mov         rax, 0
-    mov         rdi, string_format
-    mov         rsi, end_print_nums_output
+    mov         rdi, end_print_nums_output
     call        printf
 
     ; Print a message that it will start sorting by pointers 
     mov         rax, 0
-    mov         rdi, string_format
-    mov         rsi, start_sort_nums_output
+    mov         rdi, start_sort_nums_output
     call        printf
 
     ; Call sort_pointers (sorts the array by pointers)

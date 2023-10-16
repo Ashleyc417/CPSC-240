@@ -24,7 +24,7 @@
 //  Program name: Assignment 3 - Sort by Pointers
 //  Programming languages: Two module in C, One module in C++, Two module in X86-64, and One module in Bash.
 //  Date program began: 2023-Oct-4
-//  Date of last update: 2023-Oct-9
+//  Date of last update: 2023-Oct-15
 //  Files in this program: main.c, output_array.c, sorted_array.cpp, director.asm, input_array.asm, rx.sh
 //  Status: This program was tested over a dozen times on Ubuntu 22.04.3 (Oct 2023) without errors.
 //  Purpose: The intent of this program is to sort an inputted array and return the result.
