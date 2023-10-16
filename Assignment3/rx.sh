@@ -45,22 +45,22 @@ rm -f *.out
 rm -f *.lis
 
 echo "Assemble the module director.asm"
-nasm -f elf64 -l director.lis -o director.o director.asm
+nasm -f elf64 -o director.o director.asm
 
 echo "Assemble the module input_array.asm"
-nasm -f elf64 -l input_array.lis -o input_array.o input_array.asm
+nasm -f elf64 -o input_array.o input_array.asm
 
 echo "Compile the C module output_array.c"
-gcc -c -m64 -Wall -o output_array.o output_array.c -fno-pie -no-pie
+gcc -c -o output_array.o output_array.c
 
 echo "Compile the C module sort_pointers.asm"
-nasm -f elf64 -l sort_pointers.lis -o sort_pointers.o sort_pointers.asm
+nasm -f elf64 -o sort_pointers.o sort_pointers.asm
 
 echo "Compile the C module main.c"
-gcc -c -m64 -Wall -o main.o main.c -fno-pie -no-pie
+gcc -c -o main.o main.c
 
 echo "Link all the object files already created"
-gcc -m64 -o arr.out director.o input_array.o output_array.o sort_pointers.o main.o -fno-pie -no-pie -z noexecstack
+gcc -o arr.out director.o input_array.o output_array.o sort_pointers.o main.o -no-pie -z noexecstack
 
 rm -f *.o
 rm -f *.lis

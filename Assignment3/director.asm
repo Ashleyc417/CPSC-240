@@ -42,8 +42,6 @@
 ;==================================================================================================================================
 ; Declarations
 ;==================================================================================================================================
-array_size equ 10
-
 extern printf         ; external C function to write to standard output
 extern input_array    ; external function from the assembly module inputarray.asm
 extern output_array   ; external function from the assembly module outputarray.c
@@ -60,6 +58,7 @@ segment .data
     start_sort_nums_output      db "The array is now being sorted without moving any numbers.", 10, 0
     end_sort_nums_output        db "The data in the array are now ordered as follows:", 10, 0
     function_complete_message   db "The array will be sent back to the caller function.", 10, 0
+    array_size equ 10
 
     string_format db "%s", 0
     floatform     db "%lf", 0

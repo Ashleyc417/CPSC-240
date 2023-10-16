@@ -42,11 +42,11 @@
 ;==================================================================================================================================
 ; Declarations
 ;==================================================================================================================================
-segment.bss
+segment .bss
     align 64
     backup_r resq 832
 
-segment.text
+segment .text
     global sort_pointers
 
 sort_pointers:
@@ -73,14 +73,14 @@ sort_pointers:
     mov rdx, 0
     xsave [backup_r]
     
-    mov r8, rdi         ; r8 will hold the address of our array
-    mov r9, rsi         ; r9 will hold the size of the array
-    xor r10, r10        ; r10 will hold our loop counter
-    inc r10             ; + 1 because we are comparing backwards in this sorting algo
+    mov r8, rdi        
+    mov r9, rsi       
+    xor r10, r10   
+    inc r10             
 
-    xor r11, r11        ; r11 will count the comparison we've made without swapping
-    xor r12, r12        ; This will be a temp variable used later
-    xor r13, r13        ; This will be a temp variable used later
+    xor r11, r11       
+    xor r12, r12        
+    xor r13, r13      
 
     jmp sweep
 
@@ -92,39 +92,33 @@ restart:
     jmp sweep
 
 sweep:
-    ; If this condition is true, we are done sorting the whole array
     cmp r11, r9
     je done
-    ; If this condition is true, start a new sweep
+   
     cmp r10, r9
     jge restart
 
-    ; If our current element is too large, we should swap the two
-    ; Start by putting them in temp registers
     mov r12, [r8 + r10 * 8 - 8]
     mov r13, [r8 + r10 * 8]
-    ; Now extract their values
+    
     movsd xmm8, [r12]
     movsd xmm9, [r13]
-    ; Now compare the two, swap if necessary
+
     ucomisd xmm8, xmm9
     ja swap
 
-    ; Increment clean sweep counter if no swap was called
     inc r11
     jmp after_swap
 
 swap:
-    ; Swap the two pointers using the registers we used earlier
     mov r12, [r8 + r10 * 8 - 8]
     mov r13, [r8 + r10 * 8]
     mov [r8 + r10 * 8 - 8], r13
     mov [r8 + r10 * 8], r12
-    ; Continue with our operations
+
     jmp after_swap
 
 after_swap:
-    ; Increment our loop counter and continue looping
     inc r10
     jmp sweep
 
