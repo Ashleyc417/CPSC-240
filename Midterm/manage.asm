@@ -63,10 +63,10 @@ manage:
     push r15
     pushf
 
-    ; ; Backup AVX, SSE, FPU registers
-    ; mov rax, 7
-    ; mov rdx, 0
-    ; xsave [storedata]
+    ; Backup AVX, SSE, FPU registers
+    mov rax, 7
+    mov rdx, 0
+    xsave [storedata]
 
 ;===============================================================================
 ; Print Prompts
@@ -198,9 +198,9 @@ manage:
 ;===============================================================================
 ; Clean up Stack
 ;===============================================================================
-    ; mov rax, 7
-    ; mov rdx, 0
-    ; xrstor [storedata]
+    mov rax, 7
+    mov rdx, 0
+    xrstor [storedata]
 
     movsd xmm8, qword [rsp]
     add rsp, 8

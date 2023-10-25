@@ -34,7 +34,7 @@ rot_left:
     push r15
     pushf
 
-    Backup AVX, SSE, FPU registers
+    ; Backup AVX, SSE, FPU registers
     mov rax, 7
     mov rdx, 0
     xsave [storedata]

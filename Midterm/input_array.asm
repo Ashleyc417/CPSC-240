@@ -46,10 +46,10 @@ input_array:
     push    r15
     pushf
 
-    ; ; State Component Backup 
-    ; mov         rax, 7
-    ; mov         rdx, 0
-    ; xsave       [storedata]
+    ; State Component Backup 
+    mov         rax, 7
+    mov         rdx, 0
+    xsave       [storedata]
 
     mov         r14, rdi    ; r14 is the array
     mov         r15, rsi    ; r15 is the upper-limit of the number of cells in the array
@@ -86,10 +86,10 @@ input_number:
     jmp         input_number
 
 input_finished:
-    ; ; State Component Restore 
-    ; mov     rax, 7
-    ; mov     rdx, 0
-    ; xrstor  [storedata]
+    ; State Component Restore 
+    mov     rax, 7
+    mov     rdx, 0
+    xrstor  [storedata]
 
 
     ; Before returning to main.c. fill the move value of r13 into rax
