@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Name: Joel Daniel Rico
-# CWID: 885687517
-# Email: joeldanielrico@csu.fullerton.edu
+# Name: Ashley Chan
+# Email: ashleyc417@csu.fullerton.edu
 # Date: 12/06/23
+# CWID: 885814376
 
 echo "======================================================"
 
