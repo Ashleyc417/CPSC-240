@@ -1,0 +1,1 @@
+I tested this on nasm 2.16.01 and it worked. I'm not sure if it works on older versions of nasm.
